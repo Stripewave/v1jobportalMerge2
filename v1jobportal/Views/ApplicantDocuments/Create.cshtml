@@ -1,0 +1,120 @@
+﻿@model v1jobportal.Models.ApplicantDocuments
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link disabled" data-toggle="tab" href="#home">Bio Data</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link disabled" data-toggle="tab" href="#profile">Education History</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link disabled" href="#">Employment History</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link disabled" href="#">Certificates & Awards</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="#">Upload Documents</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link disabled" href="#">Summary</a>
+    </li>
+
+</ul>
+<hr />
+<h5>Applicant Documents</h5>
+<h6 class="font-italic">Upload all documents required. CV and Cover letter.</h6>
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <!--<form method="post" enctype="multipart/form-data" asp-controller="ApplicantDocumentsController" asp-action="Create">
+    <div class="form-group">
+        <div class="col-md-10">
+            <p>Upload one or more files using this form:</p>
+            <input type="file" name="files" multiple />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Upload" />
+        </div>
+    </div>-->
+
+
+        <form enctype="multipart/form-data" asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UploadCv" class="control-label">Curriculum Vitae (CV) (Only Pdf & Ms Word-Maximum size of 2MB)</label>
+
+                <div class="form-group">
+                    <div class="custom-file">
+                        <input type="file" asp-for="UploadCv" class="form-control custom-file-input">
+                        <label class="custom-file-label">Upload CV...</label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="UploadCoverLetter" class="control-label">Cover Letter (Only Pdf & Ms Word Maximum size of 2MB)</label>
+
+                <div class="form-group">
+                    <div class="custom-file">
+                        <input type="file" asp-for="UploadCoverLetter" class="form-control custom-file-input">
+                        <label class="custom-file-label">Upload Cover Letter...</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <!--<div class="form-group">
+                <label class="control-label">Institution Name (Awarder of certificate. Max size 2 MB. Only Pdf and Doc)</label>
+                <!--<input asp-for="InstitutionName" class="form-control" />
+        <span asp-validation-for="InstitutionName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfCertification" class="control-label">Date of Certification</label>
+                <input asp-for="DateOfCertification" class="form-control" />
+                <span asp-validation-for="DateOfCertification" class="text-danger"></span>
+            </div>-->
+
+            <div class="form-group float-md-right">
+                <input type="submit" value=" Next" class="btn btn-success" />
+            </div>
+        </form>
+        <form method="post" enctype="multipart/form-data">
+            <input type="file" name="file" />
+            <button type="submit">Upload</button>
+        </form>
+
+        @if (ViewBag.Message != null)
+        {
+            <div class="alert alert-success" style="margin-top:20px">
+                @ViewBag.Message
+            </div>
+        }
+
+    </div>
+</div>
+
+<div>
+    <!--<a asp-action="Index">Back to List</a>-->
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.custom-file-input').on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).next('.custom-file-label').html(fileName);
+            });
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    
+}

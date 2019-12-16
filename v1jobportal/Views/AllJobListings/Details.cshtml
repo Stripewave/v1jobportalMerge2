@@ -1,0 +1,72 @@
+﻿@model v1jobportal.Models.AllJobListings
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>AllJobListings</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JobTitle)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JobTitle)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DutyStation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DutyStation)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Duties)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Duties)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Doctorate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Doctorate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MastersDegree)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MastersDegree)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.bachelorsDegree)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.bachelorsDegree)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Diploma)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Diploma)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Certificate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Certificate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Deadline)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Deadline)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

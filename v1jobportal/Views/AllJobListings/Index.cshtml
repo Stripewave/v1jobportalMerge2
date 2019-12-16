@@ -1,0 +1,123 @@
+﻿@model IEnumerable<v1jobportal.Models.AllJobListings>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Available Vancancies</h2>
+<style>
+
+    #customers {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #customers td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            max-height: 20%;
+        }
+
+        #customers tr:nth-child(even) {
+            background-color: #f2f2f2;
+            max-height: 20%;
+        }
+
+        #customers tr:hover {
+            background-color: #ddd;
+            max-height: 20%;
+        }
+
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #2C3E50;
+            color: white;
+        }
+</style>
+
+<table id="customers">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.JobTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DutyStation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Duties)
+            </th>
+
+            <th>@Html.DisplayNameFor(model => model.Deadline)</th>
+            <th>Deadline Status</th>
+            <th></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            int result = DateTime.Compare(DateTime.Now, item.Deadline);
+            if (result < 0)
+            {
+                //job still active
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.JobTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DutyStation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Duties)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Deadline)
+                    </td>
+                    <td>
+                        <span class="alert alert-success"><b>Active</b></span>
+                    </td>
+                    <td height="50">
+                        <a class="nav-link btn btn-info" asp-controller="ApplicantBioDatas" asp-action="Create"><b>Apply</b></a>
+                    </td>
+                </tr>
+            }
+            else if (result == 0)
+            {
+                //deadline is today
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.JobTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DutyStation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Duties)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Deadline)
+                    </td>
+                    <td>
+                        <span class="alert alert-warning"><b>Today</b></span>
+                    </td>
+                    <td height="50">
+                        <a class="nav-link btn btn-info" asp-controller="ApplicantBioDatas" asp-action="Create"><b>Apply</b></a>
+                    </td>
+
+                </tr>
+            }
+            else
+            {
+
+                //Here Dont Display expired jobs
+             
+            }
+        }
+    </tbody>
+</table>

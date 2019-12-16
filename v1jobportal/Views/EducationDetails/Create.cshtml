@@ -1,0 +1,71 @@
+﻿@model v1jobportal.Models.EducationDetails
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link disabled" data-toggle="tab" href="#home">Bio Data</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#profile">Education History</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#">Employment History</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#">Certificates & Awards</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#">Upload Documents</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#">Summary</a>
+        </li>
+
+    </ul>
+
+<h4>EducationDetails</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NameOfInstitution" class="control-label">Name of Institution </label>
+                @Html.TextBoxFor(model => model.NameOfInstitution, new { placeholder = "Instituion name..", @class = "form-control" })
+                <!--<input asp-for="NameOfInstitution" class="form-control" />
+        <span asp-validation-for="NameOfInstitution" class="text-danger"></span>-->
+            </div>
+            <div class="form-group">
+                <label asp-for="QualificationAttained" class="control-label">Level of Qualification Attained (Masters, Bachelor, Diploma ... etc</label>
+                @Html.TextBoxFor(model => model.QualificationAttained, new { placeholder = "Bachelors degree..", @class = "form-control" })
+                <!--<input asp-for="QualificationAttained" class="form-control" />
+        <span asp-validation-for="QualificationAttained" class="text-danger"></span>-->
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="DateQualificationWasAttained" class="control-label">Date of Qualification Attainement</label>
+                <input asp-for="DateQualificationWasAttained" class="form-control" />
+                <span asp-validation-for="DateQualificationWasAttained" class="text-danger"></span>
+            </div>
+            <div class="btn-group-vertical">
+                <div class="form-group float-md-right">
+                    <input type="submit" value=" Append another qualification" class="btn btn-primary" />
+                </div>
+            </div>
+            <div class="form-group float-md-right">
+                <input type="submit" value=" Next" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <!--<a asp-action="Index">Back to List</a>-->
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

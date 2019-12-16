@@ -1,0 +1,61 @@
+﻿@model IEnumerable<v1jobportal.Models.PendingApplications>
+
+@{
+    ViewData["Title"] = "Pending Applications";
+}
+
+<h3>Pending Applications</h3>
+<hr />
+<h5 class="font-italic">All pending applications as at your last save progress</h5>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Jd_JobId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Emp_Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Deadline)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bd_FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bd_LastName)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Jd_JobId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Emp_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Deadline)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bd_FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bd_MiddleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bd_LastName)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">View Job Details</a>
+            </td>
+            
+        </tr>
+}
+    </tbody>
+</table>

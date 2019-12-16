@@ -1,0 +1,171 @@
+﻿@model v1jobportal.Models.SubmittedApplication
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>SubmittedApplication</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Jd_JobId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Jd_JobId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Jd_JobTitle)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Jd_JobTitle)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Bd_FirstName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Bd_FirstName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Bd_MiddleName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Bd_MiddleName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Bd_LastName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Bd_LastName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Bd_Residence)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Bd_Residence)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Bd_PrimaryPhoneNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Bd_PrimaryPhoneNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Bd_AlternativePhoneNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Bd_AlternativePhoneNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Bd_LanguagesSpoken)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Bd_LanguagesSpoken)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Bd_WorkedWithIDRC)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Bd_WorkedWithIDRC)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Ed_NameOfInstitution)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Ed_NameOfInstitution)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Ed_QualificationAttained)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Ed_QualificationAttained)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Ed_DateQualificationWasAttained)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Ed_DateQualificationWasAttained)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Eh_EmployerName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Eh_EmployerName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Eh_EmploymentStartDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Eh_EmploymentStartDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Eh_EmploymentEndDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Eh_EmploymentEndDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Eh_JobTitle)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Eh_JobTitle)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Eh_SummaryOfDuties)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Eh_SummaryOfDuties)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Eh_SummaryOfAchievments)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Eh_SummaryOfAchievments)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Ca_CertificationName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Ca_CertificationName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Ca_CertifyingInstitutionName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Ca_CertifyingInstitutionName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Ca_CertificationDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Ca_CertificationDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Ud_CertificationAwardName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Ud_CertificationAwardName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Ud_InstitutionName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Ud_InstitutionName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Ud_DateOfCertification)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Ud_DateOfCertification)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

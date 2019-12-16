@@ -1,0 +1,100 @@
+﻿@model v1jobportal.Models.SubmittedApplication
+<hr />
+
+<head>
+    @{
+        ViewData["Title"] = "Candidates";
+    }
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://developers.camelotwave.com/jquery_cookie_asp.js" type="text/javascript"></script>
+</head>
+<body>
+    <script>
+        var CandidateData = JSON.parse($.cookie("candidate_json_string"));
+    </script>
+    <button class="btn btn-info" style="float:right;" id="print_commander"><b>Print Summary</b></button>
+    <div class="container">
+        <h2 id="enclose"><script>document.write(CandidateData[0][3]);</script> Applying Candidates</h2>
+            <table class="table table-striped" border="1" cellpadding="3" id="target_data">
+                <thead>
+                    <tr>
+                        <th class="print_away_params">SHORT LIST</th>
+                        <th>CANDIDATE NAME</th>
+                        <th>JOB TITLE</th>
+                        <th>PHONE NUMBER</th>
+                        <th>RESIDENCE</th>
+                    </tr>
+                </thead>
+                
+                <script>
+
+                    for (var i = 0; i < CandidateData.length; i++) {
+                        document.write("<tbody class='data_wanted" + i + "'>  </tbody>");
+                    }
+                </script>
+            </table>
+        <span class="status"></span>
+    </div>
+
+</body>
+
+
+<script type="text/javascript">
+
+    var CandidateData = JSON.parse($.cookie("candidate_json_string"));
+    if ($.cookie("candidate_json_string").length < 4) {
+        document.write("<b>No Candidate Data Found</b>");
+    } else {
+
+        for (var i = 0; i < CandidateData.length; i++) {
+
+            CandidateData[i].forEach((D) => { $(".data_wanted" + i).html("<tr><td  class='print_away_params'><form class='candidate_chosen" + i + "'><input type='hidden' class='job_used' name='JobId' /><input type='hidden' class='job_title' name='JobTitle' /><input type='hidden' name='candidate_name' value='" + CandidateData[i][4] + ' ' + CandidateData[i][6] + "'/><input type='hidden' name='lucky_candidate' value='" + CandidateData[i][0] + "'><button class='btn btn-primary' type='submit'><b>Short-List</b></button></form></td><td><b>" + CandidateData[i][4] + ' ' + CandidateData[i][6] + "</b></td><td>" + CandidateData[i][3] + "</td><td>" + CandidateData[i][8] + "</td><td>" + CandidateData[i][7] + "</td></tr>"); });
+        }   
+    }
+    function printData() {
+        var divToPrint = document.getElementById("target_data");
+        newWin = window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.print();
+        newWin.close();
+    }
+    $('#print_commander').on('click', function () {
+        $(".print_away_params").hide();
+        $("#target_data tr td").each(function () {
+            $(this).on('click', function () {
+            });
+        });
+        printData();
+    });
+
+    $("form").submit(function (e) {
+
+       var theForm = $(this);
+        var formID = theForm.attr("class");
+        console.log(formID);
+
+        $.ajax({              
+            url: "@Url.Action("ProcessCandidates", "SubmittedApplications")",
+            type: "POST",
+            data: $("." + formID).serialize(),
+            processData: false,
+            success: function (result) {
+                $(".status").html("<span class='alert alert-success'><b>Candidate Shortlist Success!</b></span>");
+            }
+        });
+
+        return false;
+    });
+     setInterval(function(){  $(".status").html(""); }, 3000);
+
+     $(document).ready(function () {
+        $(".job_used").val(CandidateData[0][1]);
+        $(".job_title").val(CandidateData[0][3]);
+        return false;
+     });
+
+</script>
+

@@ -1,0 +1,97 @@
+﻿@model v1jobportal.Models.EmploymentHistoryModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link disabled" data-toggle="tab" href="#home">Bio Data</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" data-toggle="tab" href="#profile">Education History</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="#">Employment History</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#">Certificates & Awards</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#">Upload Documents</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#">Summary</a>
+        </li>
+
+    </ul> 
+<hr />
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-row">
+        <div class="col-md-12">
+            <label asp-for="EmployerName" class="control-label">Employer Name</label>
+            <input asp-for="EmployerName" class="form-control" />
+            <span asp-validation-for="EmployerName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+
+            <label asp-for="EmploymentStartDate" class="control-label">Employment Start Date</label>
+            <input asp-for="EmploymentStartDate" class="form-control" />
+            <span asp-validation-for="EmploymentStartDate" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label asp-for="EmploymentEndDate" class="control-label">Employment End Date</label>
+            <input asp-for="EmploymentEndDate" class="form-control" />
+            <span asp-validation-for="EmploymentEndDate" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-12 mb-3">
+            <label asp-for="JobTitle" class="control-label">Job Title</label>
+            <input asp-for="JobTitle" class="form-control" />
+            <span asp-validation-for="JobTitle" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-12 mb-3">
+            <!--<label asp-for="SummaryOfDuties" class="control-label"></label>
+            <input asp-for="JobTitle" class="form-control" />
+            <textarea class="form-control" id="SummaryOfDuties" rows="7"></textarea>-->
+
+            <label asp-for="SummaryOfDuties" class="control-label">Enter A Summary Of Duties (Maximum of 500 words)</label>
+            @Html.TextAreaFor(model => model.SummaryOfDuties, new { placeholder = "Description of Duties...", @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-12 mb-3">
+            <label asp-for="SummaryOfAchievments" class="control-label">Enter A Summary of Achievments (Maximum of 500 words)</label>
+            @Html.TextAreaFor(model => model.SummaryOfDuties, new { placeholder = "Summary Of Achievments...", @class = "form-control" })
+            <span asp-validation-for="SummaryOfAchievments" class="text-danger" />
+
+        </div>
+    </div>
+    <div class="btn-group-vertical">
+        <div class="form-group float-md-right">
+            <input type="submit" value=" Add another Job" class="btn btn-primary" />
+        </div>
+    </div>
+
+    <div class="form-group float-md-right">
+        <input type="submit" value=" Next" class="btn btn-success" />
+    </div>
+
+</form>
+
+    <div>
+        <!--<a asp-action="Index">Back to List</a>-->
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    }

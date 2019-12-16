@@ -1,0 +1,70 @@
+﻿@model v1jobportal.Models.CertificationsAndAwards
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link disabled" data-toggle="tab" href="#home">Bio Data</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" data-toggle="tab" href="#profile">Education History</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#">Employment History</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="#">Certificates & Awards</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#">Upload Documents</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#">Summary</a>
+        </li>
+
+    </ul>
+
+<h5>Certifications And Awards</h5>
+<h6 class="font-italic">Please enter all your Certifications.(Maximum of 7 Certification/Awards required)</h6>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CertificationName" class="control-label">Name of Certification</label>
+                <input asp-for="CertificationName" class="form-control" />
+                <span asp-validation-for="CertificationName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CertifyingInstitutionName" class="control-label">Certifying Institution</label>
+                <input asp-for="CertifyingInstitutionName" class="form-control" />
+                <span asp-validation-for="CertifyingInstitutionName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CertificationDate" class="control-label">Date of Certification</label>
+                <input asp-for="CertificationDate" class="form-control" />
+                <span asp-validation-for="CertificationDate" class="text-danger"></span>
+            </div>
+            <div class="btn-group-vertical">
+                <label class="control-label">Maximum of 7 Awards & Certifications</label>
+                <div class="form-group float-md-right">
+                    <input type="submit" value=" Append another qualification" class="btn btn-primary" />
+                </div>
+            </div>
+            <div class="form-group float-md-right">
+                <input type="submit" value=" Next" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <!--<a asp-action="Index">Back to List</a>-->
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

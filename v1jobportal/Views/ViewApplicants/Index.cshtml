@@ -1,0 +1,76 @@
+﻿@model IEnumerable<v1jobportal.Models.AllJobListings>
+
+@{
+    ViewData["Title"] = "Applying Candidates";
+}
+<br /><br />
+<h2>Candidate & Job Manager</h2>
+<br /><br>
+<style>
+
+    #customers {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #customers td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            max-height: 20%;
+        }
+
+        #customers tr:nth-child(even) {
+            background-color: #f2f2f2;
+            max-height: 20%;
+        }
+
+        #customers tr:hover {
+            background-color: #ddd;
+            max-height: 20%;
+        }
+
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #2C3E50;
+            color: white;
+        }
+</style>
+<p>
+  
+</p>
+<table id="customers">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.JobTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DutyStation)
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DutyStation)
+            </td>
+            <td height="50">
+                <a href="../SubmittedApplications/ApplicantData?Viewit=true&JobCandidate=@Convert.ToInt32(item.Id)"><button class="btn btn-info"><b>View Candidates</b></button></a>
+            </td>
+            <td height="50">
+                <a href="../SubmittedApplications/ShortListedCandidates?Viewit=true&JobCandidates=@Convert.ToInt32(item.Id)"><button class="btn btn-info"><b>View ShortListed</b></button></a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

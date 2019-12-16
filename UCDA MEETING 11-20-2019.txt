@@ -1,0 +1,37 @@
+UCDA UGANDA
+-----------------------------
+URA
+UCDA
+COSEKE
+---------------
+PARTIES PRESENT
+-Lydia
+-Grace -Business Analyst
+-christian 
+-Valentine
+-Rafael -QA- ucda
+
+20m bags of export
+-change in coffee road map
+-sudan- change of processes-made recommendations
+-
+85%-Done
+Automation of processes done
+-team to start using system-training
+
+-Right from Expter Register
+----------------------------------------------------------------------------------------------------
+clarify phase of scope 2
+-single window.-Geneva-trade info portal
+	-client app in manual
+	-*coffee is top export
+	-*need to serve client through single window-access all services.
+	-*commodity based appl-myif?
+	-*confirm system is ok-can client accesss system in the process fo phase 2
+	**-How do you handle payment to the bank-verification of client payments
+	-prn notification
+	-*Embedd QR CODE
+	*-NIN Instead of TIN
+	*Unique country code
+	*reset after year-
+	*sonora

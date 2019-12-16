@@ -1,0 +1,59 @@
+﻿@model v1jobportal.Models.ApplicantBioData
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>ApplicantBioData</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Residence" class="control-label"></label>
+                <input asp-for="Residence" class="form-control" />
+                <span asp-validation-for="Residence" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PrimaryPhoneNumber" class="control-label"></label>
+                <input asp-for="PrimaryPhoneNumber" class="form-control" />
+                <span asp-validation-for="PrimaryPhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AlternativePhoneNumber" class="control-label"></label>
+                <input asp-for="AlternativePhoneNumber" class="form-control" />
+                <span asp-validation-for="AlternativePhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LanguagesSpoken" class="control-label"></label>
+                <input asp-for="LanguagesSpoken" class="form-control" />
+                <span asp-validation-for="LanguagesSpoken" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="WorkedWithIDRC" /> @Html.DisplayNameFor(model => model.WorkedWithIDRC)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,19 @@
+﻿@model IEnumerable<v1jobportal.Models.AllJobListings>
+
+@{
+    ViewData["Title"] = "Job Management";
+}
+
+<h4>Job Management</h4>
+
+<div class="form-group">
+
+
+    <div><a class="nav-link" asp-controller="AllJobListings" asp-action="Create">Post New Job (Reserved for HR)</a></div>
+
+    <div><a class="nav-link" asp-controller="ApplicantBioDatas" asp-action="Create">Filter / Vet Job Applications </a></div>
+
+    <div><a class="nav-link" asp-controller="ApplicantBioDatas" asp-action="Create">Manage Short Listed Applicants </a></div>
+
+    <div><a class="nav-link" asp-controller="ApplicantBioDatas" asp-action="Create">View All previous Jobs Posted </a></div>
+</div>

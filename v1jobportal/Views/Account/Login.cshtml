@@ -1,0 +1,42 @@
+﻿@model LoginViewModel
+
+@{ 
+    ViewBag.Title = "User Login";
+}
+
+    
+    <div class="row d-flex justify-content-center">
+        
+        <div class="col-md-6">
+            <h3 class="text-md-center"><b>Administrator Login</b></h3>
+            <form method="post">
+                <div asp-validation-summary="All" class="text-danger">
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label asp-for="RememberMe">
+                                <input asp-for="RememberMe" />
+                                @Html.DisplayNameFor(m => m.RememberMe)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!--<button type="submit" class="btn btn-primary">Login</button>-->
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+
+            </form>
+            <div class="text-xl-right">
+                <a class="nav-link" asp-controller="Account" asp-action="RessetPassword"><p>Forgot your password?</p></a>
+            </div>
+        </div>
+
+    </div>

@@ -1,0 +1,31 @@
+﻿@model IEnumerable<v1jobportal.Models.AllJobListings>
+
+
+@{
+    ViewBag.Title = "Administration Dashboard";
+}
+<hr />
+<h4>This is the Administrator dashboard</h4>
+<hr />
+
+<div class="btn-group btn-group-toggle">
+    <button class="btn btn-secondary active" onclick="startAction('Create New Role')">Create New Role</button>
+    <button class="btn btn-secondary active" onclick="startAction('Edit All Roles')">Edit All Roles</button>
+    <button class="btn btn-secondary active" asp-controller="Administration" asp-action="ListRoles">List of Roles</button>
+</div>
+
+<div id="Create New Role" class="action">
+    <h6>Create New Role</h6>
+    <p>See below Create New Role assigned to users.</p>
+</div>
+
+<div id="Edit All Roles" class="action" style="display:none">
+    <h6>Edit All Roles</h6>
+    <p>See below Edit All Roles assigned to users.</p>
+</div>
+
+<div id="List of Roles" class="action" style="display:none">
+    <h6>List of Roles</h6>
+    <p>See below List of Roles assigned to users.</p>
+
+</div>

@@ -1,0 +1,92 @@
+﻿<p>God is the greatest corder</p>
+@model IEnumerable<v1jobportal.Models.AllJobListings>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Available Vancancies</h2>
+<style>
+
+    #customers {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #customers td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            max-height: 20%;
+        }
+
+        #customers tr:nth-child(even) {
+            background-color: #f2f2f2;
+            max-height: 20%;
+        }
+
+        #customers tr:hover {
+            background-color: #ddd;
+            max-height: 20%;
+        }
+
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #2C3E50;
+            color: white;
+        }
+</style>
+<p>
+    <!--<a asp-action="Create">Create New</a>-->
+</p>
+<table id="customers">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.JobTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DutyStation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Duties)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Deadline)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DutyStation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duties)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Deadline)
+                </td>
+                <td height="50">
+
+                    <a class="nav-link" asp-controller="ApplicantBioDatas" asp-action="Create">Apply </a>
+
+                    <!--
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>-->
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<v1jobportal.Models.SubmittedApplication>
+
+@{
+    ViewData["Title"] = "Submitted Applications";
+}
+
+<h3>Submitted Applications</h3>
+<hr />
+<h5 class="font-italic">Below is a list of all the applications your have submitted.</h5>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Jd_JobId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Jd_JobTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bd_FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bd_LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Deadline)
+            </th>
+
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Jd_JobId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Jd_JobTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bd_FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bd_LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Deadline)
+            </td>
+
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">View Job Details</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
