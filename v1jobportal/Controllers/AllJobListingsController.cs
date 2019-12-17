@@ -128,7 +128,7 @@ namespace v1jobportal.Controllers
 
         public IActionResult GenarateJobLinks()
         {
-            ViewBag.JobID_Found = "https://localhost:44384/AllJobListings/JobLink?camelot=" + Request.Cookies["loged_job"].ToString() + "&hydra_ramela=" + EncryptString("command-1", "E546C8DF278CD5931069B522E695D4F2") + "xctm-route=" + EncryptString("cracken-hades", "E546C8DF278CD5931069B522E695D4F2");
+            ViewBag.JobID_Found = "/AllJobListings/JobLink?camelot=" + Request.Cookies["loged_job"].ToString() + "&hydra_ramela=" + EncryptString("command-1", "E546C8DF278CD5931069B522E695D4F2") + "xctm-route=" + EncryptString("cracken-hades", "E546C8DF278CD5931069B522E695D4F2");
 
             return View();
         }
