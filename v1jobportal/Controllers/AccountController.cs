@@ -69,14 +69,24 @@ namespace v1jobportal.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+
+       
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = model.Email, Email = model.Email };
+                var user = new IdentityUser { UserName = model.Email, Email = model.Email};
                 var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    string ID = user.Id;
+
+                    CookieOptions cookies = new CookieOptions();
+                    cookies.Expires = DateTime.Now.AddDays(1);
+                    Response.Cookies.Append("_JAR_user", ID);
+                    Response.Cookies.Append("_JAR_user_status", "02");
+                    Response.Cookies.Append("_JAR_user_mail", user.Email);
+
                     // Add all new users to the User role
                     await userManager.AddToRoleAsync(user,"User");
                     //ignore--await signInManager.SignInAsync(user, isPersistent: false);
@@ -180,10 +190,5 @@ namespace v1jobportal.Controllers
 
             return View();
         }
-
-      
-
-
-
     }
 }

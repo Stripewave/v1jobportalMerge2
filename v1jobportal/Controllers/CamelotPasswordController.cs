@@ -58,6 +58,28 @@ namespace v1jobportal.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmAccount(string rimxeus)
+        {
+
+            CookieOptions cookies = new CookieOptions();
+            cookies.Expires = DateTime.Now.AddDays(1);
+            Response.Cookies.Append("_confit", rimxeus);
+
+            string query = "UPDATE AspNetUsers SET EmailConfirmed='1' WHERE Id='" + rimxeus + "'";
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Connection = con;
+                con.Open();
+
+                var TY = await cmd.ExecuteNonQueryAsync();
+                con.Close();
+            }
+
+            return View();
+        }
+
         public static string HashPassword(string password)
         {
             byte[] salt;
@@ -83,7 +105,7 @@ namespace v1jobportal.Controllers
         {
             var EncryptNewPassword = HashPassword(NewPassword);
 
-            string query = "UPDATE AspNetUsers SET PasswordHash='"+EncryptNewPassword+"' WHERE Id='"+validation+"'";
+            string query = "UPDATE AspNetUsers SET PasswordHash='" + EncryptNewPassword + "' WHERE Id='" + validation + "'";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -97,5 +119,6 @@ namespace v1jobportal.Controllers
 
             return View();
         }
+        
     }
 }
