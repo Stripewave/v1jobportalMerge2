@@ -16,16 +16,23 @@ using v1jobportal.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Session;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 
 namespace v1jobportal
 {
     public class Startup
     {
 
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
+
+
 
         public IConfiguration Configuration { get; }
 

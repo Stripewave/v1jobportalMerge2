@@ -52,4 +52,11 @@
     <PackageReference Include="System.Runtime.Serialization.Json" Version="4.3.0" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="uploads\" />
+    <Folder Include="Views\Uploading\uploads\" />
+    <Folder Include="wwwroot\uploads\" />
+  </ItemGroup>
+
 </Project>
