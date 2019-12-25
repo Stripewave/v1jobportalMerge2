@@ -48,7 +48,7 @@ namespace v1jobportal.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> ProcessUpload5(IFormFile applicant_cv, string JobId, string EmpId)
+        public async Task<IActionResult> ProcessUpload(IFormFile applicant_cv, string JobId, string EmpId)
         {
             if (applicant_cv == null || applicant_cv.Length == 0)
                 return Content("file not selected");
@@ -78,7 +78,7 @@ namespace v1jobportal.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> ProcessUpload(IFormFile applicant_cv, string JobId, string EmpId)
+        public async Task<IActionResult> UlternateUpload_Method(IFormFile applicant_cv, string JobId, string EmpId)
         {
             try
             {
