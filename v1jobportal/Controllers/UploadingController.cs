@@ -72,8 +72,39 @@ namespace v1jobportal.Controllers
                 }
                 await applicant_cv.CopyToAsync(stream);
             }
+            ViewBag.UploadResponse = "Your File Was Was SuccesFully Uploaded, Thankyou!";
 
-            return RedirectToAction("Files");
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpladCover(IFormFile cover_letter, string JobId, string EmpId)
+        {
+            if (cover_letter == null || cover_letter.Length == 0)
+                return Content("file not selected");
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", cover_letter.FileName);
+
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                Random GEN = new Random();
+                int ID_CORE = GEN.Next(100, 90000000);
+
+                string query = "UPDATE ApplicantDocuments SET UploadCoverLetter='" + path + "' WHERE Emp_Id=" + EmpId + " AND Jd_JobId=" + JobId + "";
+
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Connection = con;
+                    con.Open();
+
+                    var TY = await cmd.ExecuteNonQueryAsync();
+                    con.Close();
+                }
+                await cover_letter.CopyToAsync(stream);
+            }
+            ViewBag.UploadResponse = "Your File Was Was SuccesFully Uploaded, Thankyou!";
+
+            return View();
         }
 
 
