@@ -46,6 +46,12 @@ namespace v1jobportal.Controllers
             return View(await _context.SubmittedApplication.ToListAsync());
         }
 
+        public async Task<IActionResult> FilterPaused()
+        {
+            return View();
+        }
+
+
         // GET: SubmittedApplications/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -179,6 +185,141 @@ namespace v1jobportal.Controllers
             return View();
         }
 
+        [HttpPost]
+        public void ExperiencedCandidates(int JOB_ID, int ExperienceOfYears)
+        {
+            try
+            {
+                    ArrayList CandidatesFoundArray = new ArrayList();
+                    using (SqlCommand ExperienceYears = new SqlCommand("SELECT * FROM EmploymentHistoryModel WHERE JobId="+JOB_ID+" AND TotalYearsWorked="+ExperienceOfYears+""))
+                    {
+                        ExperienceYears.Connection = con;
+                        con.Open();
+
+                        var ExpericedCandidatesFound = ExperienceYears.ExecuteReader();
+
+                        while (ExpericedCandidatesFound.Read())
+                        {
+
+                            object[] FinalDataObject = new object[ExpericedCandidatesFound.FieldCount];
+                            ExpericedCandidatesFound.GetValues(FinalDataObject);
+                            CandidatesFoundArray.Add(FinalDataObject);
+
+                        }
+
+                        string jsonCandidateObject = JsonSerializer.Serialize(CandidatesFoundArray);
+                        CookieOptions cookies = new CookieOptions();
+                        cookies.Expires = DateTime.Now.AddDays(1);
+                        Response.Cookies.Append("experinced_", jsonCandidateObject);
+                        
+                        ExpericedCandidatesFound.Close();
+                        con.Close();
+                    }
+                
+            }
+            catch (Exception cb)
+            {
+                //handle error gracefully
+                Response.Cookies.Append("experinced_response_error_", cb.ToString());
+            }
+            
+
+        }
+
+
+        [HttpPost]
+        public IActionResult CertifiedCandidates(string JOB_CERT_ID)
+        {
+            try
+            {
+                ArrayList CertCandidatesFoundArray = new ArrayList();
+                using (SqlCommand CertExperienceYears = new SqlCommand("SELECT * FROM CertificationsAndAwards WHERE JobId='" + JOB_CERT_ID + "'"))
+                {
+                    CertExperienceYears.Connection = con;
+                    con.Open();
+
+                    var CertExpericedCandidatesFound = CertExperienceYears.ExecuteReader();
+
+                    while (CertExpericedCandidatesFound.Read())
+                    {
+
+                        object[] FinalDataObject = new object[CertExpericedCandidatesFound.FieldCount];
+                        CertExpericedCandidatesFound.GetValues(FinalDataObject);
+                        CertCandidatesFoundArray.Add(FinalDataObject);
+
+                    }
+
+                    string jsonCandidateObject = JsonSerializer.Serialize(CertCandidatesFoundArray);
+                    CookieOptions cookies = new CookieOptions();
+                    cookies.Expires = DateTime.Now.AddDays(1);
+                    Response.Cookies.Append("CertExperinced_", jsonCandidateObject);
+
+
+                    CertExpericedCandidatesFound.Close();
+                    con.Close();
+                }
+
+            }
+            catch (Exception cb)
+            {
+                //handle error gracefully
+                Response.Cookies.Append("cert_experinced_response_error_", cb.ToString());
+            }
+
+            return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult FilterRequest(string education, string JobID, string experience, string certficate_wanted, string language)
+        {
+            string EducationDetails_query = "SELECT * FROM EducaitonDetails WHERE '"+education+"' IN (QualificationAttained, QualificationAttained2, QualificationAttained3, QualificationAttained4, QualificationAttained5) AND JobId="+JobID+"";
+
+            using (SqlCommand cmd1 = new SqlCommand(EducationDetails_query))
+            {
+                try
+                {
+                    cmd1.Connection = con;
+                    con.Open();
+                    var TY = cmd1.ExecuteReader();
+
+                    ArrayList al = new ArrayList();
+
+                    while (TY.Read())
+                    {
+
+                        object[] values = new object[TY.FieldCount];
+                        TY.GetValues(values);
+                        al.Add(values);
+                    }
+
+                    string jsonString;
+                    jsonString = JsonSerializer.Serialize(al);
+
+                    CookieOptions cookies = new CookieOptions();
+                    cookies.Expires = DateTime.Now.AddDays(1);
+                    Response.Cookies.Append("loaded_prototype_", jsonString);
+                    Response.Cookies.Append("years_", experience);
+                    Response.Cookies.Append("cert_", certficate_wanted);
+                    Response.Cookies.Append("language_", language);
+                    Response.Cookies.Append("trigger_", "0");
+
+                    TY.Close();
+                    con.Close();
+                }
+                catch (Exception gh)
+                {
+                    //handle error well
+                }
+               
+            }
+
+            return View();
+        }
+
+
+
+
         public IActionResult RemoveCandidate([FromForm] string unlucky_candidate, int? JobId)
         {
 
@@ -201,6 +342,10 @@ namespace v1jobportal.Controllers
             return View();
         }
 
+        public async Task<IActionResult> FilteringCloud()
+        {
+            return View();
+        }
 
         // GET: SubmittedApplications/Create
         public IActionResult Create()

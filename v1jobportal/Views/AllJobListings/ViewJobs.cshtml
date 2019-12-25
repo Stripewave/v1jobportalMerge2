@@ -53,7 +53,6 @@
 
             <th>@Html.DisplayNameFor(model => model.Deadline)</th>
             <th>Deadline Status</th>
-            <th></th>
 
         </tr>
     </thead>
@@ -81,9 +80,6 @@
                     <td>
                         <span class="alert alert-success"><b>Active</b></span>
                     </td>
-                    <td height="50">
-                        <a class="nav-link btn btn-info" asp-controller="ApplicantBioDatas" asp-action="Create"><b>Apply</b></a>
-                    </td>
                 </tr>
             }
             else if (result == 0)
@@ -105,9 +101,6 @@
                     </td>
                     <td>
                         <span class="alert alert-warning"><b>Today</b></span>
-                    </td>
-                    <td height="50">
-                        <a class="nav-link btn btn-info" asp-controller="ApplicantBioDatas" asp-action="Create"><b>Apply</b></a>
                     </td>
 
                 </tr>
@@ -131,9 +124,6 @@
                     </td>
                     <td>
                         <span class="alert alert-danger"><b>Expired</b></span>
-                    </td>
-                    <td height="50">
-                        <a class="nav-link btn btn-info" asp-controller="ApplicantBioDatas" asp-action="Create"><b>Apply</b></a>
                     </td>
 
                 </tr>

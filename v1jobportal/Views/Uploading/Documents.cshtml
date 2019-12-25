@@ -1,0 +1,114 @@
+﻿<html>
+<head>
+    @{
+        ViewData["Title"] = "Manage Documents";
+    }
+</head>
+
+<body>
+    <hr />
+    <h4>Applicant Document Management</h4>
+    <hr />
+    <form class="merat">
+        <input name="Job_Id" id="anthena" type="hidden" />
+        <input name="Candidate" id="hades" type="hidden" />
+    </form>
+
+    <script>
+        function TX(cname) {
+              var name = cname + "=";
+              var decodedCookie = decodeURIComponent(document.cookie);
+              var ca = decodedCookie.split(';');
+              for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                  c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                  return c.substring(name.length, c.length);
+                }
+              }
+              return "";
+        }
+
+
+
+            var Jobloged = TX("_cvls"); var TYX = TX("_cvls2");
+            $("#anthena").val(Jobloged); $("#hades").val(TYX);
+
+            $.ajax({
+                url: "@Url.Action("ManageDocuments", "Uploading")",
+                type: "POST",
+                data: $(".merat").serialize(),
+                processData: false,
+                success: function (result) {}
+            });
+
+
+
+        var Roots = TX("_empdocs");
+        var LoadedData = JSON.parse(Roots);
+
+    </script>
+    <table class="table table-striped" border="1" cellpadding="3" id="target_data">
+        <thead>
+            <tr>
+                <th>Curriculum Vitae</th>
+                <th>Cover Letter</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>
+                    <script>
+                        if (LoadedData[0][3].length > 7) {
+                            document.write("<span class='badge badge-success'><b>Curriculum Vitae Present</b></span>");
+                            window.localStorage.setItem("zim",LoadedData[0][3]);
+                        } else {
+                            document.write("<span class='badge badge-danger'><b>Curriculum Vitae Absent</b></span>");
+                        }
+                    </script>
+                </td>
+                <td>
+                    <script>
+                        if (LoadedData[0][4] == "not-available") {
+                            document.write("<span class='badge badge-danger'><b>Cover Letter Absent</b></span>");
+                        } else {
+                            document.write("<span class='badge badge-success'><b>Cover Letter Present</b></span>");
+                        }
+                    </script>
+                </td>
+                <td>
+                    <script>
+                        if (LoadedData[0][3].length > 7) {
+                            document.write('<button class="btn btn-primary call_cv"><b>View CV</b></button>');
+                        } else {
+                            document.write('<button class="btn btn-primary call_cv" disabled><b>View CV</b></button>');
+                        }
+                    </script>
+                </td>
+                <td>
+                    <script>
+                        if (LoadedData[0][4] == "not-available" || LoadedData[0][4] == '') {
+                            document.write('<button class="btn btn-primary call_letter" disabled><b>View Cover Letter</b></button>');
+                        } else {
+                            document.write('<button class="btn btn-primary call_letter" type="button"><b>View Cover Letter</b></button>');
+                        }
+                    </script>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <iframe src="" id="cv_iframe" style="width:200px; height:200px;"></iframe>
+
+    <script>
+        $('#cv_iframe').attr('src', "https://localhost:44384/" + LoadedData[0][3]);
+        document.write("https://localhost:44384/" + LoadedData[0][3]);
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,137 @@
+﻿@model v1jobportal.Models.SubmittedApplication
+
+<head>
+    @{
+        ViewData["Title"] = "Filtering Cloud";
+    }
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://developers.camelotwave.com/jquery_cookie_asp.js" type="text/javascript"></script>
+</head>
+
+    <script>
+        var CandidateData = JSON.parse($.cookie("candidate_json_string"));
+
+         function TX(cname) {
+              var name = cname + "=";
+              var decodedCookie = decodeURIComponent(document.cookie);
+              var ca = decodedCookie.split(';');
+              for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                  c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                  return c.substring(name.length, c.length);
+                }
+              }
+              return "";
+        }
+    </script>
+
+    <form class="hera">
+        <input type="hidden" name="JOB_ID" class="jid_cloud" />
+        <input type="hidden" name="ExperienceOfYears" class="years_cloud" />
+    </form>
+
+    <form class="zeus">
+        <input type="hidden" name="JOB_CERT_ID" id="jid_wanted"/>
+    </form>
+
+
+    <script type="text/javascript">
+        var f = TX("Job_ID_");
+        $(".jid_cloud").val(f); $(".years_cloud").val(TX("years_")); if (TX("cert_") == "has_no") { } else if (TX("cert_") == "has") { $("#jid_wanted").val(TX("Job_ID_")); }
+
+        $.ajax({
+            url: "@Url.Action("ExperiencedCandidates", "SubmittedApplications")",
+            type: "POST",
+            data: $(".hera").serialize(),
+            processData: false,
+            success: function (result) {}
+        });
+
+        var Loaded = TX("loaded_prototype_"); var Experienced = TX("experinced_"); var CertifiedRequest = TX("cert_");
+        if (Experienced.length > 7) {
+
+            var CoreFoundArray = [];
+            var EducationCandidatesArray = JSON.parse(Loaded); var ExperiencedCandidates = JSON.parse(Experienced);
+
+            for (var i = 0; i < EducationCandidatesArray.length; i++) {
+               
+
+                var ExistCheck = ExperiencedCandidates[i].indexOf(EducationCandidatesArray[i][1]);
+
+                    if (ExistCheck == "-1") {
+                        console.log("candidate not found");
+                    } else {
+                        CoreFoundArray.push(EducationCandidatesArray[i][1]);
+                        var Cleaned = JSON.stringify(CoreFoundArray);
+                        document.cookie = "_leveled= " + Cleaned + "";
+
+                        if (CertifiedRequest == "has" ) {
+                            $.ajax({
+                                url: "@Url.Action("CertifiedCandidates", "SubmittedApplications")",
+                                type: "POST",
+                                data: $(".zeus").serialize(),
+                                processData: false,
+                                success: function (result) {}
+                            });
+
+                            var ct = TX("CertExperinced_"); var xin = TX("_leveled");
+                            var CertQuaExperienced = JSON.parse(ct); var ExpQualified = JSON.parse(xin);
+
+                            var QualifiedExperiencedCertified = [];
+
+                            $.each(ExpQualified, function (index, value) {
+
+                                    for (var i = 0; i < ExpQualified.length; i++) {
+
+                                        var CertCheck = CertQuaExperienced[i].indexOf(value);
+
+                                        if (CertCheck == "-1") {
+                                            console.log("no certified candidate");
+                                        } else {
+                                            QualifiedExperiencedCertified.push(value);
+                                            var EncodeB = JSON.stringify(QualifiedExperiencedCertified);
+                                            document.cookie = "Q_E_C= " + EncodeB + "";
+                                        }
+                                    }
+                       
+                            });
+
+                        } else if (CertifiedRequest == "has_no") {
+                          //certificate is not required
+                          
+
+                        }
+                    }
+
+            }
+
+        } else if (Experienced.length < 7) {
+
+            document.write("<h3 style='color:red;'>Sorry No " + TX("years_") + " Year Experienced Candidates Found For This Job, Please Filtering Again!</h3><br><br><a href='/ViewApplicants'><button class='btn btn-primary'><b>Filter Data Again</b></button></a>");
+
+        }
+
+        
+        $(document).ready(function () {
+            var command = TX("relo");
+            if (command == 0) {
+                location.reload(); var HV = 1;
+                document.cookie = "relo= " + HV + "";
+                location.reload();
+            } else if (command == 1) {
+                location.reload(); var NB = 3;
+                document.cookie = "relo= " + NB + "";
+            } else if (command==3) {
+
+            }
+            return false;
+        });
+
+</script>
+

@@ -1,5 +1,4 @@
 ﻿@model v1jobportal.Models.SubmittedApplication
-<hr />
 
 <head>
     @{
@@ -15,34 +14,138 @@
     <script>
         var CandidateData = JSON.parse($.cookie("candidate_json_string"));
     </script>
+
+    <h3 style="text-align:center; font-family:sans-serif; font-weight:bolder;">Candidate Filtering Tools</h3>
+    <br />
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="print_away_params">Education Qualification</th>
+                <th>Years Experience</th>
+                <th>Certificates</th>
+                <th>Language</th>
+                <th><span id="preloader"></span><br /></th>
+            </tr>
+        </thead>
+        <tbody>
+            <form class="vim">
+                <tr>
+                    <td>
+                        <select class="form-control ed-qualify common" name="education">
+                            <option value="">---Choose---</option>
+                            <option value="4"><b>Certificate</b></option>
+                            <option value="5"><b>Diploma</b></option>
+                            <option value="1"><b>Bachlor Degree</b></option>
+                            <option value="2"><b>Masters Degree</b></option>
+                            <option value="3"><b>Doctorate of Philosophy</b></option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <select class="form-control years-qualify common" name="experience">
+                            <option value="">---Choose---</option>
+                            @{
+                                for (int i = 1; i < 20; i++)
+                                {
+                                    <option value="@i"><b>@i Years</b></option>
+                                }
+                            }
+                        </select>
+                    </td>
+
+                    <input id="job_filter_job" name="JobID" type="hidden" />
+
+                    <td>
+                        <select class="form-control cert-qualify common" name="certficate_wanted">
+                            <option value="">---Choose---</option>
+                            <option value="has"><b>Has Certificate</b></option>
+                            <option value="has_no"><b>Has No Certificate</b></option>
+                        </select>
+                    </td>
+
+                    <td>
+
+                        <ul style="list-style-type:none;">
+                            <li>
+                                <input type="checkbox" name="language[]" value="1" class="hydra1 room-code" id="1" onclick="ghost('1',arr)"/>&nbsp; <label><b>English</b></label>
+                            </li>
+                            <li>
+                                <input type="checkbox" name="language" value="2" class="hydra2 room-code" id="2" onclick="ghost('2',arr)"/>&nbsp; <label><b>Luganda</b></label>
+                            </li>
+                            <li>
+                                <input type="checkbox" name="language" value="3" class="hydra3 room-code" id="3" onclick="ghost('3',arr)" />&nbsp; <label><b>Rukiga</b></label>
+                            </li>
+                            <li>
+                                <input type="checkbox" name="language" value="4" class="hydra4 room-code" id="4" onclick="ghost('4',arr)"/>&nbsp; <label><b>Acholi</b></label>
+                            </li>
+                            <li>
+                                <input type="checkbox" name="language" value="5" class="hydra5 room-code" id="5" onclick="ghost('5',arr)"/>&nbsp; <label><b>Lugbar</b></label>
+                            </li>
+                            <li>
+                                <input type="checkbox" name="language" value="6" class="hydra6 room-code" id="6" onclick="ghost('6',arr)"/>&nbsp; <label><b>Teso</b></label>
+                            </li>
+                            <li>
+                                <input type="checkbox" name="language" value="7" class="hydra7 room-code" id="7" onclick="ghost('7',arr)"/>&nbsp; <label><b>Lusoga</b></label>
+                            </li>
+                            <li>
+                                <input type="checkbox" name="language" value="8" class="hydra8 room-code" id="8" onclick="ghost('8',arr)"/>&nbsp; <label><b>Other</b></label>
+                            </li>
+                        </ul>
+                    </td>
+
+                    <td>
+                        <button class="btn btn-primary" type="button" id="filter_request"><b>Filter Now</b></button>
+                    </td>
+                </tr>
+            </form>
+        </tbody>
+    </table>
+    <hr />
+
     <button class="btn btn-info" style="float:right;" id="print_commander"><b>Print Summary</b></button>
     <div class="container">
-        <h2 id="enclose"><script>document.write(CandidateData[0][3]);</script> Applying Candidates</h2>
-            <table class="table table-striped" border="1" cellpadding="3" id="target_data">
-                <thead>
-                    <tr>
-                        <th class="print_away_params">SHORT LIST</th>
-                        <th>CANDIDATE NAME</th>
-                        <th>JOB TITLE</th>
-                        <th>PHONE NUMBER</th>
-                        <th>RESIDENCE</th>
-                    </tr>
-                </thead>
-                
-                <script>
+        <h2 id="enclose">
+        <script>document.write(CandidateData[0][3]);</script> Applying Candidates</h2>
+        <table class="table table-striped" border="1" cellpadding="3" id="target_data">
+            <thead>
+                <tr>
+                    <th class="print_away_params">SHORT LIST</th>
+                    <th>CANDIDATE NAME</th>
+                    <th>JOB TITLE</th>
+                    <th>PHONE NUMBER</th>
+                    <th>RESIDENCE</th>
+                </tr>
+            </thead>
 
-                    for (var i = 0; i < CandidateData.length; i++) {
-                        document.write("<tbody class='data_wanted" + i + "'>  </tbody>");
-                    }
-                </script>
-            </table>
+            <script>
+
+                for (var i = 0; i < CandidateData.length; i++) {
+                    document.write("<tbody class='data_wanted" + i + "'>  </tbody>");
+                }
+            </script>
+        </table>
         <span class="status"></span>
     </div>
-
 </body>
 
 
 <script type="text/javascript">
+
+    function TX(cname) {
+              var name = cname + "=";
+              var decodedCookie = decodeURIComponent(document.cookie);
+              var ca = decodedCookie.split(';');
+              for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                  c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                  return c.substring(name.length, c.length);
+                }
+              }
+              return "";
+          }
 
     var CandidateData = JSON.parse($.cookie("candidate_json_string"));
     if ($.cookie("candidate_json_string").length < 4) {
@@ -70,6 +173,22 @@
         printData();
     });
 
+    $("#filter_request").click(function () {
+        $("#preloader").html("<span class='alert alert-info'><b>Filtering Data...</b></span><br>");
+
+        $.ajax({
+            url: "@Url.Action("FilterRequest", "SubmittedApplications")",
+            type: "POST",
+            data: $(".vim").serialize(),
+            processData: false,
+            success: function (result) {
+                
+            }
+        });
+
+        return false;
+    });
+
     $("form").submit(function (e) {
 
        var theForm = $(this);
@@ -88,13 +207,53 @@
 
         return false;
     });
-     setInterval(function(){  $(".status").html(""); }, 3000);
+
+
+    setInterval(function () { $(".status").html(""); }, 3000);
+    setInterval(function () {
+        if (TX("loaded_prototype_").length > 7 && TX("trigger_") == 0) {
+
+            document.cookie = "trigger_=1; expires=Thu, 18 Dec 2020 12:00:00 UTC; path=/";
+            location.href = "FilteringCloud";
+
+        } else if (TX("loaded_prototype_").length > 7 && TX("trigger_") == 1) {
+            //gracefully do nothing if no command is passed.
+        } else if (TX("loaded_prototype_").length < 7 && TX("trigger_") == 0 || TX("candidate_json_string").length < 7) {
+
+            $("#preloader").html("<span class='alert alert-danger'><b>No Qualifying Candidates Found.</b></span><br>");
+
+        }
+    }, 1000);
 
      $(document).ready(function () {
-        $(".job_used").val(CandidateData[0][1]);
-        $(".job_title").val(CandidateData[0][3]);
+         $(".job_used").val(CandidateData[0][1]);
+         $("#job_filter_job").val(CandidateData[0][1]);
+         document.cookie = "Job_ID_= " + CandidateData[0][1] + ""; var cb = 0;
+         document.cookie = "relo= " + cb + "";
+         document.cookie = "_leveled=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+         document.cookie = "cert_=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+         document.cookie = "CertExperinced_=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+         document.cookie = "experinced_=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+         document.cookie = "loaded_prototype_=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+         document.cookie = "language_=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+         document.cookie = "Q_E_C=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+         document.cookie = "years_=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+         $(".job_title").val(CandidateData[0][3]);
         return false;
      });
+
+
+    var arr = ['','','','','','','',''];
+    function ghost(cook,arr) {
+        var ind = arr.indexOf(cook);
+        if (ind >= 0) {
+            arr[cook-1] = '';
+        } else {
+            arr[cook-1] = cook;
+        }
+        console.log(JSON.stringify(arr));
+        return JSON.stringify(arr);
+    }
 
 </script>
 

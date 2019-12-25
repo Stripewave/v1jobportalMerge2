@@ -19,6 +19,7 @@ using v1jobportal.Controllers;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Hosting;
+using System.Text;
 
 namespace v1jobportal.Controllers
 {
@@ -45,90 +46,174 @@ namespace v1jobportal.Controllers
         }
         private readonly IHostingEnvironment _hostingEnv;
 
+
         [HttpPost]
-        public async Task<IActionResult> ProcessUpload(ICollection<IFormFile> applicant_cv, string JobId, string EmpId)
+        public async Task<IActionResult> ProcessUpload5(IFormFile applicant_cv, string JobId, string EmpId)
         {
-            var uploads = Path.Combine("uploads");
-            foreach (var file in applicant_cv)
+            if (applicant_cv == null || applicant_cv.Length == 0)
+                return Content("file not selected");
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", applicant_cv.FileName);
+
+            using (var stream = new FileStream(path, FileMode.Create))
             {
-                if (file.Length > 0)
+                Random GEN = new Random();
+                int ID_CORE = GEN.Next(100, 90000000);
+
+                string query = "INSERT INTO ApplicantDocuments(Id,Jd_JobId,Emp_Id,UploadCv,UploadCoverLetter) VALUES('" + ID_CORE + "','" + JobId + "','" + EmpId + "','" + path + "','not-available')";
+
+                using (SqlCommand cmd = new SqlCommand(query, con))
                 {
-                    using (var fileStream = new FileStream(Path.Combine(uploads, EmpId+file.FileName), FileMode.Create))
-                    {
-                        var SavePath = "uploads/" + EmpId + file.FileName;
-                        string query = "INSERT INTO ApplicantDocuments(Id,Jd_JobId,Emp_Id,UploadCv,UploadCoverLetter) VALUES('"+file.Length+"','" + JobId + "','" + EmpId + "','" + SavePath + "','not-available')";
+                    cmd.Connection = con;
+                    con.Open();
 
-                        using (SqlCommand cmd = new SqlCommand(query, con))
-                        {
-                            cmd.Connection = con;
-                            con.Open();
-
-                            var TY = await cmd.ExecuteNonQueryAsync();
-                            con.Close();
-                        }
-                        await file.CopyToAsync(fileStream);
-                    }
+                    var TY = await cmd.ExecuteNonQueryAsync();
+                    con.Close();
                 }
+                await applicant_cv.CopyToAsync(stream);
             }
-            ViewBag.Response = "Your Document Was Uploaded SoccessFully, Thankyou!";
+
+            return RedirectToAction("Files");
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ProcessUpload(IFormFile applicant_cv, string JobId, string EmpId)
+        {
+            try
+            {
+                var uploads = Path.Combine("uploads");
+                
+                    if (applicant_cv.Length > 0)
+                    {
+                        using (var fileStream = new FileStream(Path.Combine(uploads, EmpId + applicant_cv.FileName), FileMode.Create))
+                        {
+                            var SavePath = "uploads/" + EmpId + applicant_cv.FileName;
+
+                            Random GEN = new Random();
+                            int ID_CORE = GEN.Next(100, 90000000);
+
+                            string query = "INSERT INTO ApplicantDocuments(Id,Jd_JobId,Emp_Id,UploadCv,UploadCoverLetter) VALUES('" + ID_CORE + "','" + JobId + "','" + EmpId + "','" + SavePath + "','not-available')";
+
+                            using (SqlCommand cmd = new SqlCommand(query, con))
+                            {
+                                cmd.Connection = con;
+                                con.Open();
+
+                                var TY = await cmd.ExecuteNonQueryAsync();
+                                con.Close();
+                            }
+                            await applicant_cv.CopyToAsync(fileStream);
+                        }
+                    }
+                
+                ViewBag.Response = "Your Document Was Uploaded SoccessFully, Thankyou!";
+            }
+            catch (Exception cxv)
+            {
+               
+            }
+            
             return View();
         }
 
 
         public async Task<IActionResult> UpladCover(ICollection<IFormFile> cover_letter, string JobId, string EmpId)
         {
-            var uploads = Path.Combine("uploads");
-            foreach (var file in cover_letter)
+            try
             {
-                if (file.Length > 0)
+                var uploads = Path.Combine("uploads");
+                foreach (var file in cover_letter)
                 {
-                    using (var fileStream = new FileStream(Path.Combine(uploads, EmpId + file.FileName), FileMode.Create))
+                    if (file.Length > 0)
                     {
-                        var SavePath = "uploads/" + EmpId + file.FileName;
-                        string query = "UPDATE ApplicantDocuments SET UploadCoverLetter='"+SavePath+ "' WHERE Emp_Id="+EmpId+"";
-
-                        using (SqlCommand cmd = new SqlCommand(query, con))
+                        using (var fileStream = new FileStream(Path.Combine(uploads, EmpId + file.FileName), FileMode.Create))
                         {
-                            cmd.Connection = con;
-                            con.Open();
+                            var SavePath = "uploads/" + EmpId + file.FileName;
+                            string query = "UPDATE ApplicantDocuments SET UploadCoverLetter='" + SavePath + "' WHERE Emp_Id=" + EmpId + " AND Jd_JobId=" + JobId + "";
 
-                            var TY = await cmd.ExecuteNonQueryAsync();
-                            con.Close();
+                            using (SqlCommand cmd = new SqlCommand(query, con))
+                            {
+                                cmd.Connection = con;
+                                con.Open();
+
+                                var TY = await cmd.ExecuteNonQueryAsync();
+                                con.Close();
+                            }
+                            await file.CopyToAsync(fileStream);
                         }
-                        await file.CopyToAsync(fileStream);
                     }
                 }
+                ViewBag.Response = "Your Document Was Uploaded SoccessFully, Thankyou!";
             }
-            ViewBag.Response = "Your Document Was Uploaded SoccessFully, Thankyou!";
+            catch (Exception bin_down)
+            {
+
+            }
+            
             return View();
         }
 
-        public async Task<IActionResult> ViewDocs(ICollection<IFormFile> cover_letter, string JobId, string EmpId)
+
+        public async Task<IActionResult> Documents(string alfrea, string txp)
         {
-            var uploads = Path.Combine("uploads");
-            foreach (var file in cover_letter)
-            {
-                if (file.Length > 0)
+                try
                 {
-                    using (var fileStream = new FileStream(Path.Combine(uploads, EmpId + file.FileName), FileMode.Create))
-                    {
-                        var SavePath = "uploads/" + EmpId + file.FileName;
-                        string query = "UPDATE ApplicantDocuments SET UploadCoverLetter='" + SavePath + "' WHERE Emp_Id=" + EmpId + "";
-
-                        using (SqlCommand cmd = new SqlCommand(query, con))
-                        {
-                            cmd.Connection = con;
-                            con.Open();
-
-                            var TY = await cmd.ExecuteNonQueryAsync();
-                            con.Close();
-                        }
-                        await file.CopyToAsync(fileStream);
-                    }
-                }
+                    CookieOptions cookies = new CookieOptions();
+                    cookies.Expires = DateTime.Now.AddDays(1);
+                    Response.Cookies.Append("_cvls", alfrea);
+                    Response.Cookies.Append("_cvls2", txp);
             }
-            ViewBag.Response = "Your Document Was Uploaded SoccessFully, Thankyou!";
-            return View();
+                catch (Exception gh)
+                {
+                    //handle error gracefully
+                }
+
+                return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ManageDocuments(int Job_Id, string Candidate)
+        {
+            int GHM = Convert.ToInt32(Job_Id);
+            string loadDocs_query = "SELECT * FROM ApplicantDocuments WHERE Jd_JobId='"+GHM+"' AND Emp_Id='"+Candidate+"'";
+
+            using (SqlCommand cmd1 = new SqlCommand(loadDocs_query))
+            {
+                try
+                {
+                    cmd1.Connection = con;
+                    con.Open();
+                    var TY = cmd1.ExecuteReader();
+
+                    ArrayList al = new ArrayList();
+
+                    while (TY.Read())
+                    {
+
+                        object[] values = new object[TY.FieldCount];
+                        TY.GetValues(values);
+                        al.Add(values);
+                    }
+
+                    string jsonString;
+                    jsonString = JsonSerializer.Serialize(al);
+                    CookieOptions cookies = new CookieOptions();
+                    cookies.Expires = DateTime.Now.AddDays(1);
+                    Response.Cookies.Append("_empdocs", jsonString);
+
+                    TY.Close();
+                    con.Close();
+
+                }
+                catch (Exception VB)
+                {
+                    //handle Error Gracefully
+                }
+
+            }
+                return View();
         }
     }
 }
