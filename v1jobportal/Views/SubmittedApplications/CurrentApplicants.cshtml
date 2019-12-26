@@ -1,0 +1,173 @@
+﻿@model v1jobportal.Models.SubmittedApplication
+
+    @{
+        ViewData["Title"] = "Candidates";
+    }
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://developers.camelotwave.com/jquery_cookie_asp.js" type="text/javascript"></script>
+
+<body>
+
+    <script>
+        function TX(cname) {
+              var name = cname + "=";
+              var decodedCookie = decodeURIComponent(document.cookie);
+              var ca = decodedCookie.split(';');
+              for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                  c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                  return c.substring(name.length, c.length);
+                }
+              }
+              return "";
+          }
+    </script>
+
+    <h3 style="text-align:center; font-family:sans-serif; font-weight:bolder;">Candidate Filtering Tools</h3>
+    <br />
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="print_away_params"></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th><span id="preloader"></span><br /></th>
+            </tr>
+        </thead>
+        <tbody>
+            <form class="education_qualify">
+                <input id="job_filter_job" name="JobID" type="hidden" />
+                <tr>
+                    <td>
+                        <span><b>Education Qualification</b></span>&nbsp;&nbsp;
+                        <select class="form-control ed-qualify common" name="education" required>
+                            <option value="">---Choose---</option>
+                            <option value="4"><b>Certificate</b></option>
+                            <option value="5"><b>Diploma</b></option>
+                            <option value="1"><b>Bachlor Degree</b></option>
+                            <option value="2"><b>Masters Degree</b></option>
+                            <option value="3"><b>Doctorate of Philosophy</b></option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <button class="btn btn-primary" type="submit"><b>Filter</b></button>
+                    </td>
+            </form>
+
+            <form class="years_experienced">
+                <input id="job_filter_job2" name="JobID" type="hidden" />
+            <td>
+            <span><b>Years Experience</b></span>&nbsp;&nbsp;
+            <select class="form-control years-qualify common" name="experience" required>
+                <option value="">---Choose---</option>
+                @{
+                    for (int i = 1; i < 20; i++)
+                    {
+                        <option value="@i"><b>@i Years</b></option>
+                    }
+                }
+            </select>
+        </td>
+
+                <td>
+                    <button class="btn btn-primary" type="submit"><b>Filter</b></button>
+                </td>
+        </form>
+
+
+        <form class="cert_qualify">
+            <input id="job_filter_job3" name="JobID" type="hidden" />
+            <td>
+                <span><b>Certification</b></span>&nbsp;&nbsp;
+                <select class="form-control cert-qualify common" name="certficate_wanted" required>
+                    <option value="">---Choose---</option>
+                    <option value="has"><b>Has Certificate</b></option>
+                    <option value="has_no"><b>Has No Certificate</b></option>
+                </select>
+            </td>
+
+            <td>
+                <button class="btn btn-primary" type="submit"><b>Filter</b></button>
+            </td>
+        </form>
+
+        <form class="education_qualify">
+            <input id="job_filter_job4" name="JobID" type="hidden" />
+            <td>
+                <span><b>Languages</b></span>&nbsp;&nbsp;
+                <ul style="list-style-type:none;">
+                    <li>
+                        <input type="checkbox" name="language[]" value="1" class="hydra1 room-code" id="1" onclick="ghost('1',arr)" />&nbsp; <label><b>English</b></label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="language" value="2" class="hydra2 room-code" id="2" onclick="ghost('2',arr)" />&nbsp; <label><b>Luganda</b></label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="language" value="3" class="hydra3 room-code" id="3" onclick="ghost('3',arr)" />&nbsp; <label><b>Rukiga</b></label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="language" value="4" class="hydra4 room-code" id="4" onclick="ghost('4',arr)" />&nbsp; <label><b>Acholi</b></label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="language" value="5" class="hydra5 room-code" id="5" onclick="ghost('5',arr)" />&nbsp; <label><b>Lugbar</b></label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="language" value="6" class="hydra6 room-code" id="6" onclick="ghost('6',arr)" />&nbsp; <label><b>Teso</b></label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="language" value="7" class="hydra7 room-code" id="7" onclick="ghost('7',arr)" />&nbsp; <label><b>Lusoga</b></label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="language" value="8" class="hydra8 room-code" id="8" onclick="ghost('8',arr)" />&nbsp; <label><b>Other</b></label>
+                    </li>
+                </ul>
+            </td>
+
+            <td>
+                <button class="btn btn-primary" type="submit" id="filter_request"><b>Filter Now</b></button>
+            </td>
+            </tr>
+        </form>
+        </tbody>
+    </table>
+    <hr />
+
+    <script>
+
+        $(document).ready(function () {
+
+            var TYX = TX("_rimJob");
+            $("#job_filter_job").val(TYX); $("#job_filter_job2").val(TYX); $("#job_filter_job3").val(TYX); $("#job_filter_job4").val(TYX);
+
+            return false;
+        });
+
+        $(".education_qualify").submit(function () {
+
+            $.ajax({              
+                url: "@Url.Action("ProcessCandidates", "SubmittedApplications")",
+                type: "POST",
+                data: $(".education_qualify").serialize(),
+                processData: false,
+                success: function (result) {
+
+
+
+                }
+            });
+
+            return false;
+        });
+
+        
+    </script>
+
+    </body>

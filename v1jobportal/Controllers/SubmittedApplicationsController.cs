@@ -125,6 +125,16 @@ namespace v1jobportal.Controllers
             return View(Viewit);
         }
 
+        public async Task<IActionResult> CurrentApplicants(SubmittedApplication Viewit, int? JobCandidate)
+        {
+
+            CookieOptions cookies = new CookieOptions();
+            cookies.Expires = DateTime.Now.AddDays(1);
+            Response.Cookies.Append("_rimJob", JobCandidate.ToString());
+
+            return View(Viewit);
+        }
+
         public async Task<IActionResult> ShortListedCandidates(SubmittedApplication Viewit, int? JobCandidates)
         {
             //int FG = Convert
