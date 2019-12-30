@@ -40,7 +40,7 @@
         <table class="table table-striped" border="1" cellpadding="3" id="target_data">
             <thead>
                 <tr>
-                    <th class="print_away_params">SHORT LIST</th>
+                    <th class="print_away_params"></th>
                     <th>CANDIDATE NAME</th>
                     <th>JOB TITLE</th>
                     <th>PHONE NUMBER</th>
@@ -269,14 +269,13 @@
                     $.each(CandidateSuccededArray, function (ixd, dl) {
 
                         $.ajax({
-                           url: "@Url.Action("FinalSort", "SubmittedApplications")",
-                           type: "POST",
-                           data: { "CandidateConfirmed": dl, "JobID": job_now },
-                           success: function (result) { }
+                            url: "@Url.Action("FinalSort", "SubmittedApplications")",
+                            type: "POST",
+                            data: { "CandidateConfirmed": dl, "JobID": job_now },
+                            success: function (result) { }
                         });
 
                     });
-
                 }
 
             }, 1000);
@@ -294,7 +293,7 @@
                         var CandidateJson_Obt = JSON.parse(obit_1);
                         $.each(CandidateJson_Obt, function (ind, val) {
 
-                            CandidateJson_Obt.forEach((D) => { $(".data_wanted" + indx).html("<tr><td class='print_away_params'><form class='candidate_chosen" + indx + "'><input type='hidden' class='job_used' name='JobId' value='" + val[1] + "'/><input type='hidden' class='job_title' name='JobTitle' value='" + val[3] + "'/><input type='hidden' name='candidate_name' value='" + val[4] + ' ' + val[6] + "'/><input type='hidden' name='lucky_candidate' value='" + val[0] + "'><button class='btn btn-primary' type='submit'><b>Short-List</b></button></form></td><td><b>" + val[4] + ' ' + val[6] + "</b></td><td>" + val[3] + "</td><td>" + val[8] + "</td><td>" + val[7] + "</td></tr>") });
+                            CandidateJson_Obt.forEach((D) => { $(".data_wanted" + indx).html("<tr><td class='print_away_params'></td><td><b>" + val[4] + ' ' + val[6] + "</b></td><td>" + val[3] + "</td><td>" + val[8] + "</td><td>" + val[7] + "</td></tr>") });
 
                         });
 
@@ -321,25 +320,11 @@
             });
             printData();
         });
+        
 
-$("form").submit(function (e) {
 
-    var theForm = $(this);
-    var formID = theForm.attr("class");
-    console.log(formID);
 
-      $.ajax({              
-          url: "@Url.Action("ProcessCandidates", "SubmittedApplications")",
-          type: "POST",
-          data: $("." + formID).serialize(),
-          processData: false,
-          success: function (result) {
-             $(".status").html("<span class='alert alert-success'><b>Candidate Shortlist Success!</b></span>");
-          }
-      });
 
-        return false;
-});
 
         $(document).ready(function () {
             var command = TX("relo");

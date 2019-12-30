@@ -23,7 +23,6 @@ namespace v1jobportal.Data
         public DbSet<EmploymentHistoryModel> EmploymentHistoryModel { get; set; }
         public DbSet<EducationDetails> EducaitonDetails { get; set; }
         public DbSet<CertificationsAndAwards> CertificationsAndAwards { get; set; }
-        public DbSet<ApplicantBioData> ApplicantBioData { get; set; }
         //
         public DbSet<ApplicantSummary> ApplicantSummary { get; set; }
         public DbSet<AllJobListings> AllJobListings { get; set; }
