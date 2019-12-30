@@ -17,7 +17,8 @@
     <button class="btn btn-info" style="float:right;" id="print_commander"><b>Print Summary</b></button>
     <div class="container">
         <h2 id="enclose">
-        <script>document.write(CandidateData[0][2]);</script> Short Listed Candidates</h2>
+            <script>document.write(CandidateData[0][2]);</script> Short Listed Candidates
+        </h2>
         <table class="table table-striped" border="1" cellpadding="3" id="target_data">
             <thead>
                 <tr>
@@ -29,9 +30,9 @@
 
             <script>
 
-                    for (var i = 0; i < CandidateData.length; i++) {
-                        document.write("<tbody class='data_wanted" + i + "'>  </tbody>");
-                    }
+                for (var i = 0; i < CandidateData.length; i++) {
+                    document.write("<tbody class='data_wanted" + i + "'>  </tbody>");
+                }
             </script>
         </table>
         <span class="status"></span>

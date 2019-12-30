@@ -174,18 +174,28 @@
     });
 
     $("#filter_request").click(function () {
-        $("#preloader").html("<span class='alert alert-info'><b>Filtering Data...</b></span><br>");
 
-        $.ajax({
-            url: "@Url.Action("FilterRequest", "SubmittedApplications")",
-            type: "POST",
-            data: $(".vim").serialize(),
-            processData: false,
-            success: function (result) {
+        if ($(".ed-qualify").val() == '') {
+            $("#preloader").html("<span class='alert alert-danger'><b>Choose Education Requirement.</b></span><br>");
+        } else if ($(".years-qualify").val() == '') {
+            $("#preloader").html("<span class='alert alert-danger'><b>Choose Years Of Experience.</b></span><br>");
+        } else if ($(".cert-qualify").val() == '') {
+            $("#preloader").html("<span class='alert alert-danger'><b>Specify If a Certificate is Required.</b></span><br>");
+        } else if ($(".ed-qualify").val() != '' && $(".years-qualify").val().length != '' && $(".cert-qualify").val().length != '') {
+
+            $("#preloader").html("<span class='alert alert-info'><b>Filtering Data...</b></span><br>");
+
+            $.ajax({
+                url: "@Url.Action("FilterRequest", "SubmittedApplications")",
+                type: "POST",
+                data: $(".vim").serialize(),
+                processData: false,
+                success: function (result) {
                 
-            }
-        });
-
+                }
+            });
+        }
+        
         return false;
     });
 
@@ -208,7 +218,6 @@
         return false;
     });
 
-
     setInterval(function () { $(".status").html(""); }, 3000);
     setInterval(function () {
         if (TX("loaded_prototype_").length > 7 && TX("trigger_") == 0) {
@@ -230,8 +239,7 @@
          $(".job_used").val(CandidateData[0][1]);
          $("#job_filter_job").val(CandidateData[0][1]);
 
-         document.cookie = "Job_ID_= " + CandidateData[0][1] + ""; var cb = 0;
-         document.cookie = "relo= " + cb + "";
+         document.cookie = "Job_ID_= " + CandidateData[0][1] + ""; var cb = 0; document.cookie = "relo= " + cb + "";
          document.cookie = "_leveled=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
          document.cookie = "cert_=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
          document.cookie = "CertExperinced_=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -239,11 +247,22 @@
          document.cookie = "loaded_prototype_=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
          document.cookie = "language_=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
          document.cookie = "Q_E_C=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+         document.cookie = "langs=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+         document.cookie = "langs_load1=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+         document.cookie = "langs_load2=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+         document.cookie = "langs_load3=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+         document.cookie = "langs_load4=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+         document.cookie = "langs_load5=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+         document.cookie = "langs_load6=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+         document.cookie = "langs_load7=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+         document.cookie = "langs_load8=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+         document.cookie = "langs_load1=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+         document.cookie = "finalSort=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
          document.cookie = "years_=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
          $(".job_title").val(CandidateData[0][3]);
+
         return false;
      });
-
 
     var arr = ['','','','','','','',''];
     function ghost(cook,arr) {
@@ -253,7 +272,8 @@
         } else {
             arr[cook-1] = cook;
         }
-        console.log(JSON.stringify(arr));
+        var objt1 = JSON.stringify(arr);
+        document.cookie = "langs= " + objt1 + "";
         return JSON.stringify(arr);
     }
 

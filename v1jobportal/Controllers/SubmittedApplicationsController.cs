@@ -125,16 +125,6 @@ namespace v1jobportal.Controllers
             return View(Viewit);
         }
 
-        public async Task<IActionResult> CurrentApplicants(SubmittedApplication Viewit, int? JobCandidate)
-        {
-
-            CookieOptions cookies = new CookieOptions();
-            cookies.Expires = DateTime.Now.AddDays(1);
-            Response.Cookies.Append("_rimJob", JobCandidate.ToString());
-
-            return View(Viewit);
-        }
-
         public async Task<IActionResult> ShortListedCandidates(SubmittedApplication Viewit, int? JobCandidates)
         {
             //int FG = Convert
@@ -201,7 +191,7 @@ namespace v1jobportal.Controllers
             try
             {
                     ArrayList CandidatesFoundArray = new ArrayList();
-                    using (SqlCommand ExperienceYears = new SqlCommand("SELECT * FROM EmploymentHistoryModel WHERE JobId="+JOB_ID+" AND TotalYearsWorked="+ExperienceOfYears+""))
+                    using (SqlCommand ExperienceYears = new SqlCommand("SELECT * FROM EmploymentHistoryModel WHERE JobId=" + JOB_ID+" AND TotalYearsWorked="+ExperienceOfYears+""))
                     {
                         ExperienceYears.Connection = con;
                         con.Open();
@@ -214,7 +204,7 @@ namespace v1jobportal.Controllers
                             object[] FinalDataObject = new object[ExpericedCandidatesFound.FieldCount];
                             ExpericedCandidatesFound.GetValues(FinalDataObject);
                             CandidatesFoundArray.Add(FinalDataObject);
-
+                            
                         }
 
                         string jsonCandidateObject = JsonSerializer.Serialize(CandidatesFoundArray);
@@ -274,6 +264,94 @@ namespace v1jobportal.Controllers
             {
                 //handle error gracefully
                 Response.Cookies.Append("cert_experinced_response_error_", cb.ToString());
+            }
+
+            return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult LanguageFilter(string LanguageId, string JobID)
+        {
+            string EducationDetails_query = "SELECT * FROM ApplicantBioData WHERE '" + LanguageId + "' IN (LanguagesSpoken, LanguagesSpoken2, LanguagesSpoken3, LanguagesSpoken4, LanguagesSpoken5, LanguagesSpoken6) AND JobId=" + JobID + "";
+
+            using (SqlCommand cmd1 = new SqlCommand(EducationDetails_query))
+            {
+                try
+                {
+                    cmd1.Connection = con;
+                    con.Open();
+                    var TY = cmd1.ExecuteReader();
+                    ArrayList al = new ArrayList();
+
+                    while (TY.Read())
+                    {
+
+                        object[] values = new object[TY.FieldCount];
+                        TY.GetValues(values);
+                        al.Add(values);
+
+                    }
+                    
+                    string jsonString;
+                    jsonString = JsonSerializer.Serialize(al);
+
+                    CookieOptions cookies = new CookieOptions();
+                    cookies.Expires = DateTime.Now.AddDays(1);
+                    Response.Cookies.Append("langs_load"+LanguageId, jsonString);
+
+                    TY.Close();
+                    con.Close();
+                }
+                catch (Exception gh)
+                {
+                    //handle error gracefully
+                }
+
+            }
+
+            return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult FinalSort(string CandidateConfirmed, string JobID)
+        {
+            string FinalSort_query = "SELECT * FROM SubmittedApplication WHERE EmpName='"+CandidateConfirmed+ "' AND Jd_JobId="+JobID+"";
+
+            using (SqlCommand cmd1 = new SqlCommand(FinalSort_query))
+            {
+                try
+                {
+                    cmd1.Connection = con;
+                    con.Open();
+                    var TY = cmd1.ExecuteReader();
+                    ArrayList al = new ArrayList();
+
+                    while (TY.Read())
+                    {
+
+                        object[] values = new object[TY.FieldCount];
+                        TY.GetValues(values);
+                        al.Add(values);
+
+                    }
+
+                    string jsonString;
+                    jsonString = JsonSerializer.Serialize(al);
+
+                    CookieOptions cookies = new CookieOptions();
+                    cookies.Expires = DateTime.Now.AddDays(1);
+                    Response.Cookies.Append("SortCall" + CandidateConfirmed, jsonString);
+
+                    TY.Close();
+                    con.Close();
+                }
+                catch (Exception gh)
+                {
+                    //handle error gracefully
+                }
+
             }
 
             return View();

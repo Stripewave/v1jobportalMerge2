@@ -1,5 +1,5 @@
 ﻿@model v1jobportal.Models.SubmittedApplication
-
+<html>
 <head>
     @{
         ViewData["Title"] = "Filtering Cloud";
@@ -10,11 +10,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" type="text/javascript"></script>
     <script src="https://developers.camelotwave.com/jquery_cookie_asp.js" type="text/javascript"></script>
 </head>
-
+<body>
     <script>
-var CandidateData=JSON.parse($.cookie("candidate_json_string"));function TX(cname){var name=cname+"=";var decodedCookie=decodeURIComponent(document.cookie);var ca=decodedCookie.split(';');for(var i=0;i<ca.length;i++){var c=ca[i];while(c.charAt(0)==' '){c=c.substring(1)}
-if(c.indexOf(name)==0){return c.substring(name.length,c.length)}}
-return""}
+        var PreCreatorArray = JSON.parse($.cookie("candidate_json_string")); function TX(cname) {
+            var name = cname + "="; var decodedCookie = decodeURIComponent(document.cookie); var ca = decodedCookie.split(';'); for (var i = 0; i < ca.length; i++) {
+                var c = ca[i]; while (c.charAt(0) == ' ') { c = c.substring(1) }
+                if (c.indexOf(name) == 0) { return c.substring(name.length, c.length) }
+            }
+            return ""
+        }
     </script>
 
     <form class="hera">
@@ -23,15 +27,355 @@ return""}
     </form>
 
     <form class="zeus">
-        <input type="hidden" name="JOB_CERT_ID" id="jid_wanted"/>
+        <input type="hidden" name="JOB_CERT_ID" id="jid_wanted" />
     </form>
+    <button class="btn btn-info" style="float:right;" id="print_commander"><b>Print Summary</b></button>
+    <a href="/ViewApplicants"><button class="btn btn-primary" style="float:left;"><b>Filter Data Again</b></button></a>
+
+    <br /><br /><br /><br />
+    <div class="container">
+        <h2 id="enclose">
+            <script>document.write(PreCreatorArray[0][3]);</script> Applying Candidates
+        </h2>
+        <table class="table table-striped" border="1" cellpadding="3" id="target_data">
+            <thead>
+                <tr>
+                    <th class="print_away_params">SHORT LIST</th>
+                    <th>CANDIDATE NAME</th>
+                    <th>JOB TITLE</th>
+                    <th>PHONE NUMBER</th>
+                    <th>RESIDENCE</th>
+                </tr>
+            </thead>
+
+            <script>
+
+                for (var i = 0; i < PreCreatorArray.length; i++) {
+                    document.write("<tbody class='data_wanted" + i + "'>  </tbody>");
+                }
+            </script>
+        </table>
+        <span class="status"></span>
+    </div>
 
 
     <script type="text/javascript">
-var f=TX("Job_ID_");$(".jid_cloud").val(f);$(".years_cloud").val(TX("years_"));if(TX("cert_")=="has_no"){}else if(TX("cert_")=="has"){$("#jid_wanted").val(TX("Job_ID_"))}
-$.ajax({url:"@Url.Action("ExperiencedCandidates", "SubmittedApplications")",type:"POST",data:$(".hera").serialize(),processData:!1,success:function(result){}});var Loaded=TX("loaded_prototype_");var Experienced=TX("experinced_");var CertifiedRequest=TX("cert_");if(Experienced.length>7){var CoreFoundArray=[];var EducationCandidatesArray=JSON.parse(Loaded);var ExperiencedCandidates=JSON.parse(Experienced);for(var i=0;i<EducationCandidatesArray.length;i++){var ExistCheck=ExperiencedCandidates[i].indexOf(EducationCandidatesArray[i][1]);if(ExistCheck=="-1"){console.log("candidate not found")}else{CoreFoundArray.push(EducationCandidatesArray[i][1]);var Cleaned=JSON.stringify(CoreFoundArray);document.cookie="_leveled= "+Cleaned+"";if(CertifiedRequest=="has"){$.ajax({url:"@Url.Action("CertifiedCandidates", "SubmittedApplications")",type:"POST",data:$(".zeus").serialize(),processData:!1,success:function(result){}});var ct=TX("CertExperinced_");var xin=TX("_leveled");var CertQuaExperienced=JSON.parse(ct);var ExpQualified=JSON.parse(xin);var QualifiedExperiencedCertified=[];$.each(ExpQualified,function(index,value){for(var i=0;i<ExpQualified.length;i++){var CertCheck=CertQuaExperienced[i].indexOf(value);if(CertCheck=="-1"){console.log("no certified candidate")}else{QualifiedExperiencedCertified.push(value);var EncodeB=JSON.stringify(QualifiedExperiencedCertified);document.cookie="Q_E_C= "+EncodeB+""}}})}else if(CertifiedRequest=="has_no"){}}}}else if(Experienced.length<7){document.write("<h3 style='color:red;'>Sorry No "+TX("years_")+" Year Experienced Candidates Found For This Job, Please Filtering Again!</h3><br><br><a href='/ViewApplicants'><button class='btn btn-primary'><b>Filter Data Again</b></button></a>")}
-$(document).ready(function(){var command=TX("relo");if(command==0){location.reload();var HV=1;document.cookie="relo= "+HV+"";location.reload()}else if(command==1){location.reload();var NB=3;document.cookie="relo= "+NB+""}else if(command==3){}
-return!1})
 
-</script>
+        var f = TX("Job_ID_"); var h = TX("years_");
+            $(".jid_cloud").val(f);
+            $(".years_cloud").val(h);
+
+            if (TX("cert_") == "has_no") { } else if (TX("cert_") == "has") { $("#jid_wanted").val(TX("Job_ID_")); }
+
+            $.ajax({
+	            url: "@Url.Action("ExperiencedCandidates", "SubmittedApplications")",
+	            type: "POST",
+                data: $(".hera").serialize(),
+                processData: false,
+	            success: function(result) {}
+            });
+            var Loaded = TX("loaded_prototype_");
+            var Experienced = TX("experinced_");
+            var CertifiedRequest = TX("cert_");
+            if (Experienced.length > 7) {
+	            var CoreFoundArray = [];
+	            var EducationCandidatesArray = JSON.parse(Loaded);
+	            var ExperiencedCandidates = JSON.parse(Experienced);
+	            for (var i = 0; i < EducationCandidatesArray.length; i++) {
+		            var ExistCheck = ExperiencedCandidates[i].indexOf(EducationCandidatesArray[i][1]);
+                    if (ExistCheck == "-1") {
+
+                        console.log("candidate not found");
+                        document.write("<h4 style='color:red;'>Sorry No Education Qualified Candidates Found, But Some Experienced Candidates Were Found.</h4><br><br><a href='/ViewApplicants'><button class='btn btn-primary'><b>Filter Data Again</b></button></a>");
+
+		            }
+		            else {
+			            CoreFoundArray.push(EducationCandidatesArray[i][1]);
+			            var Cleaned = JSON.stringify(CoreFoundArray);
+                        document.cookie = "_leveled= " + Cleaned + "";
+
+			            if (CertifiedRequest == "has") {
+
+				            $.ajax({
+					            url: "@Url.Action("CertifiedCandidates", "SubmittedApplications")",
+					            type: "POST",
+                                data: $(".zeus").serialize(),
+                                processData: false,
+					            success: function(result) {}
+				            });
+				            var ct = TX("CertExperinced_");
+				            var xin = TX("_leveled");
+				            var CertQuaExperienced = JSON.parse(ct);
+				            var ExpQualified = JSON.parse(xin);
+				            var QualifiedExperiencedCertified = [];
+				            $.each(ExpQualified, function(index, value) {
+					            for (var i = 0; i < ExpQualified.length; i++) {
+						            var CertCheck = CertQuaExperienced[i].indexOf(value);
+                                    if (CertCheck == "-1") {
+                                        document.cookie = "Q_E_C= empty";
+                                        document.write("<h3 style='color:red;'>Sorry No <span style='color:blue;'><b>" + TX("years_") + "</b></span> Year Experienced and Certified Candidates Found For This Job</h3><br><br><a href='/ViewApplicants'><button class='btn btn-primary'><b>Filter Data Again</b></button></a>");
+						            }
+						            else {
+							            QualifiedExperiencedCertified.push(value);
+							            var EncodeB = JSON.stringify(QualifiedExperiencedCertified);
+                                        document.cookie = "Q_E_C= " + EncodeB + "";
+
+                                        var inb = TX("langs"); var mtm = TX("Q_E_C"); var job_now = TX("Job_ID_");
+
+                                        var CERT_LANGS = JSON.parse(inb); var QualifiedAndExperienced = JSON.parse(mtm);
+
+                                        $.each(CERT_LANGS, function (index, lang_id) {
+
+                                            if (lang_id.length > 0) {
+
+                                                         $.ajax({
+                                                             url: "@Url.Action("LanguageFilter", "SubmittedApplications")",
+                                                             type: "POST",
+                                                             data: { "LanguageId": lang_id, "JobID": job_now },
+                                                             success: function (result) {   }
+                                                         });
+
+                                            } else if (lang_id.length == 0 || lang_id == '') { console.log("Missed An Item "); }
+
+                                        });
+
+                                            LANG_CERT_CANDIDATES = []; var uniqueCadidates = [];
+
+                                            setInterval(function () {
+
+                                                var t = TX("langs");
+                                                var LANGS_WANTED = JSON.parse(t);
+
+                                                $.each(LANGS_WANTED, function (index, LangFound) {
+                                                    if (LangFound.length > 0) {
+
+                                                        var LangCookieName = TX("langs_load" + LangFound + "");
+                                                        var LangFilter = JSON.parse(LangCookieName);
+
+                                                        for (var i = 0; i < LangFilter.length; i++) {
+                                                            $.each(QualifiedAndExperienced, function (index, CandidateEmailFound) {
+
+                                                                var lookUpCandidate_Status = LangFilter[i].indexOf(CandidateEmailFound);
+
+                                                                if (lookUpCandidate_Status == "-1") {
+
+                                                                   
+                                                                    
+                                                                } else {
+
+                                                                    LANG_CERT_CANDIDATES.push(CandidateEmailFound);
+
+                                                                    $.each(LANG_CERT_CANDIDATES, function (i, el) {
+                                                                        if($.inArray(el, uniqueCadidates) === -1) uniqueCadidates.push(el);
+                                                                    });
+
+                                                                    document.cookie = "finalSort= " + JSON.stringify(uniqueCadidates) + "";
+
+                                                                }
+
+                                                            });
+                                                        }
+
+                                                    } else if (LangFound.length == 0) {   }
+
+                                                });
+
+                                            }, 1000);
+						            }
+					            }
+				            })
+			            }
+                        else if (CertifiedRequest == "has_no") {
+
+                            var inb = TX("langs"); var mtm = TX("_leveled"); var job_now = TX("Job_ID_");
+
+                            var CERT_LANGS = JSON.parse(inb); var QualifiedAndExperienced = JSON.parse(mtm);
+
+                            $.each(CERT_LANGS, function (index, lang_id) {
+
+                                if (lang_id.length > 0) {
+
+                                      $.ajax({
+                                          url: "@Url.Action("LanguageFilter", "SubmittedApplications")",
+                                          type: "POST",
+                                          data: { "LanguageId": lang_id, "JobID": job_now },
+                                          success: function (result) { }
+                                      });
+
+                                } else if (lang_id.length == 0 || lang_id == '') { console.log("Missed An Item "); }
+
+                            });
+
+                            LANG_CERT_CANDIDATES = []; var uniqueCadidates = [];
+
+                            setInterval(function () {
+
+                                var t = TX("langs");
+                                var LANGS_WANTED = JSON.parse(t);
+
+                                $.each(LANGS_WANTED, function (index, LangFound) {
+                                    if (LangFound.length > 0) {
+
+                                        var LangCookieName = TX("langs_load" + LangFound + "");
+                                        var LangFilter = JSON.parse(LangCookieName);
+
+                                        for (var i = 0; i < LangFilter.length; i++) {
+                                            $.each(QualifiedAndExperienced, function (index, CandidateEmailFound) {
+
+                                                var lookUpCandidate_Status = LangFilter[i].indexOf(CandidateEmailFound);
+
+                                                if (lookUpCandidate_Status == "-1") {
+                                                    
+                                                } else {
+
+                                                    LANG_CERT_CANDIDATES.push(CandidateEmailFound);
+
+                                                    $.each(LANG_CERT_CANDIDATES, function (i, el) {
+                                                        if($.inArray(el, uniqueCadidates) === -1) uniqueCadidates.push(el);
+                                                    });
+
+                                                    document.cookie = "finalSort= " + JSON.stringify(uniqueCadidates) + "";
+                                                }
+
+                                            });
+                                        }
+
+                                    } else if (LangFound.length == 0) {   }
+
+                                });
+
+                            }, 1000);
+                        }
+		            }
+	            }
+            }
+
+            else if (Experienced.length < 7) {
+                document.write("<h3 style='color:red;'>Sorry No <span style='color:blue;'><b>" + TX("years_") + "</b></span> Year Experienced Candidates Found For This Job.</h3><br><br><a href='/ViewApplicants'><button class='btn btn-primary'><b>Filter Data Again</b></button></a>");
+            }
+
+    </script>
+
+    <script>
+
+        function EXT() {
+
+            setInterval(function () {
+             var CVT = TX("finalSort"); var job_now = TX("Job_ID_");
+                
+
+                if (CVT.length < 7) {
+                    $(".status").html("<br><br><span class='alert alert-danger'><b>No Candidate Found Fitting The Languages Wanted.<b/></span>");
+                } else if (CVT.length > 7) {
+
+                    var CandidateSuccededArray = JSON.parse(CVT);
+                    $.each(CandidateSuccededArray, function (ixd, dl) {
+
+                        $.ajax({
+                           url: "@Url.Action("FinalSort", "SubmittedApplications")",
+                           type: "POST",
+                           data: { "CandidateConfirmed": dl, "JobID": job_now },
+                           success: function (result) { }
+                        });
+
+                    });
+
+                }
+
+            }, 1000);
+
+            setInterval(function () {
+                var CVT = TX("finalSort");
+                if (CVT.length < 7) {
+                    $(".status").html("<br><br><span class='alert alert-danger'><b>No Candidate Found Fitting The Languages Wanted.<b/></span>");
+                } else if (CVT.length > 7) {
+                    var CandidateSuccededArray = JSON.parse(CVT);
+
+                    $.each(CandidateSuccededArray, function (indx, CandidateArray) {
+
+                        var obit_1 = TX("SortCall" + CandidateArray + "");
+                        var CandidateJson_Obt = JSON.parse(obit_1);
+                        $.each(CandidateJson_Obt, function (ind, val) {
+
+                            CandidateJson_Obt.forEach((D) => { $(".data_wanted" + indx).html("<tr><td class='print_away_params'><form class='candidate_chosen" + indx + "'><input type='hidden' class='job_used' name='JobId' value='" + val[1] + "'/><input type='hidden' class='job_title' name='JobTitle' value='" + val[3] + "'/><input type='hidden' name='candidate_name' value='" + val[4] + ' ' + val[6] + "'/><input type='hidden' name='lucky_candidate' value='" + val[0] + "'><button class='btn btn-primary' type='submit'><b>Short-List</b></button></form></td><td><b>" + val[4] + ' ' + val[6] + "</b></td><td>" + val[3] + "</td><td>" + val[8] + "</td><td>" + val[7] + "</td></tr>") });
+
+                        });
+
+                    });
+                }
+
+            }, 1000);
+
+        }
+
+        function printData() {
+            var divToPrint = document.getElementById("target_data");
+            newWin = window.open("");
+            newWin.document.write(divToPrint.outerHTML);
+            newWin.print();
+            newWin.close();
+        }
+
+        $('#print_commander').on('click', function () {
+            $(".print_away_params").hide();
+            $("#target_data tr td").each(function () {
+                $(this).on('click', function () {
+                });
+            });
+            printData();
+        });
+
+$("form").submit(function (e) {
+
+    var theForm = $(this);
+    var formID = theForm.attr("class");
+    console.log(formID);
+
+      $.ajax({              
+          url: "@Url.Action("ProcessCandidates", "SubmittedApplications")",
+          type: "POST",
+          data: $("." + formID).serialize(),
+          processData: false,
+          success: function (result) {
+             $(".status").html("<span class='alert alert-success'><b>Candidate Shortlist Success!</b></span>");
+          }
+      });
+
+        return false;
+});
+
+        $(document).ready(function () {
+            var command = TX("relo");
+            if (command == 0) {
+                window.location.reload();
+                var HV = 1;
+                document.cookie = "relo= " + HV + "";
+            }
+            else if (command == 1) {
+                window.location.reload();
+                var NB = 3;
+                document.cookie = "relo= " + NB + "";
+            }
+            else if (command == 3) {
+                window.location.reload();
+                var NBI = 4;
+                document.cookie = "relo= " + NBI + "";
+            } else if (command == 4) {
+                window.location.reload();
+                var NBI = 5;
+                document.cookie = "relo= " + NBI + "";
+            } else if (command == 5) {
+
+                EXT();
+            }
+
+            return false;
+        });
+
+
+         
+
+    </script>
+</body>
+</html>
 
