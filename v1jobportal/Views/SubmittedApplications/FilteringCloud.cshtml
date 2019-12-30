@@ -114,8 +114,7 @@
                                     if (CertCheck == "-1") {
                                         document.cookie = "Q_E_C= empty";
                                         document.write("<h3 style='color:red;'>Sorry No <span style='color:blue;'><b>" + TX("years_") + "</b></span> Year Experienced and Certified Candidates Found For This Job</h3><br><br><a href='/ViewApplicants'><button class='btn btn-primary'><b>Filter Data Again</b></button></a>");
-						            }
-						            else {
+                                    } else {
 							            QualifiedExperiencedCertified.push(value);
 							            var EncodeB = JSON.stringify(QualifiedExperiencedCertified);
                                         document.cookie = "Q_E_C= " + EncodeB + "";
@@ -158,9 +157,7 @@
                                                                 var lookUpCandidate_Status = LangFilter[i].indexOf(CandidateEmailFound);
 
                                                                 if (lookUpCandidate_Status == "-1") {
-
-                                                                   
-                                                                    
+  
                                                                 } else {
 
                                                                     LANG_CERT_CANDIDATES.push(CandidateEmailFound);
@@ -261,9 +258,9 @@
         function EXT() {
 
             setInterval(function () {
-             var CVT = TX("finalSort"); var job_now = TX("Job_ID_");
-                
 
+             var CVT = TX("finalSort"); var job_now = TX("Job_ID_");
+               
                 if (CVT.length < 7) {
                     $(".status").html("<br><br><span class='alert alert-danger'><b>No Candidate Found Fitting The Languages Wanted.<b/></span>");
                 } else if (CVT.length > 7) {
